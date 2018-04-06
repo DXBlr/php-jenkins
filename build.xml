@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Project-Name" default="build-static" basedir="">
+	<property name="build-dir" value="${basedir}/build" />
+	<property name="src-dir" value="${basedir}" />
+	
+	<target name="build-static" 
+		depends="prepare,phpmd-ci,phpcs-ci,pdepend-ci,phploc-ci" />
+
+	<target name="build-pmd" 
+		depends="prepare,phpmd-ci" />
+
+	<target name="build-cs" 
+		depends="prepare,phpcs-ci" />
+
+	<target name="build-cpd" 
+		depends="prepare,phpcpd-ci" />
+
+	<target name="build-punit" 
+		depends="prepare,phpunit-ci" />
+
+	<target name="build-pdepend" 
+		depends="prepare,pdepend-ci" />
+
+	<target name="build-phploc" 
+		depends="prepare,phploc-ci" />
+
+	<!-- lint, syntax checked -->
+	<target name="lint">
+		<apply executable="php" failonerror="false">
+			<arg value="-l" />
+			<fileset dir="">
+				<include name="**/*.php" />
+				<modified />
+			</fileset>
+		</apply>
+	</target>
+
+	<!-- Prepare the output directory(s) -->
+	<target name="prepare">
+		<echo>Making the build artifact folders</echo>
+		<mkdir dir="${build-dir}/api" />
+		<mkdir dir="${build-dir}/logs" />
+		<mkdir dir="${build-dir}/pdepend" />
+		<mkdir dir="${build-dir}/coverage" />
+		<mkdir dir="${build-dir}/code-browser" />
+	</target>
+
+	<target name="clean" depends="clean-build" description="Cleanup build(s)" />
+
+	<target name="clean-build" description="Cleaning the build artifacts">
+		<echo>Cleaning the build artifacts"</echo>
+		<delete dir="${build-dir}/api" />
+		<delete dir="${build-dir}/logs" />
+		<delete dir="${build-dir}/pdepend" />
+		<delete dir="${build-dir}/coverage" />
+		<delete dir="${build-dir}/code-browser" />
+	</target>
+
+	<!-- phpmd -->
+	<target name="phpmd-ci" description="Perform project mess detection using PHPMD">
+		<echo>Performing mess detection using PHPMD</echo>
+		<exec executable="phpmd">
+			<arg value="${src-dir}" />
+			<arg value="xml" />
+			<arg value="${build-dir}/phpmd.xml" />
+			<arg value="--reportfile" />
+			<arg value="${build-dir}/logs/pmd.xml" />
+		</exec>
+	</target>
+
+	<target name="phpcs-ci" description="Find coding standard violations using PHP_Codesniffer">
+		<echo>Performing coding standard violation using PHP_CodeSniffer</echo>
+		<exec executable="phpcs" output="/dev/null">
+			<arg value="--report=checkstyle" />
+			<arg value="--report-file=${build-dir}/logs/checkstyle.xml" />
+			<arg value="--standard=${build-dir}/phpcs.xml" />
+			<arg path="${src-dir}" />
+		</exec>
+	</target>
+
+	<!-- phpcpd -->
+	<target name="phpcpd-ci" description="Find duplicate code using PHPCPD">
+		<echo>Finding duplicate code using PHPCPD</echo>
+		<exec exectuable="phpcpd">
+			<arg value="--log-pmd" />
+			<arg value="${build-dir}/logs/pmd-cpd.xml" />
+			<arg path="${src-dir}" />
+		</exec>
+	</target>
+
+    <!-- pdepend, i.e. PhpDepend-->
+    <target name="pdepend-ci" description="Calculate software metrics using PHP_Depend">
+		<echo>Calculating software matrices using PHP_Depend</echo>
+        <exec executable="pdepend">
+            <arg value="--jdepend-xml=${build-dir}/logs/jdepend.xml" />
+            <arg value="--jdepend-chart=${build-dir}/pdepend/dependencies.svg" />
+            <arg value="--overview-pyramid=${build-dir}/pdepend/overview-pyramid.svg" />
+            <arg path="${src-dir}" />
+        </exec>
+    </target>
+
+	<!-- phploc-->
+    <target name="phploc-ci" description="Measure project size using PHPLOC">
+		<echo>Measuring project size using PHPLOC</echo>
+        <exec executable="phploc">
+           <arg value="--log-csv" />
+           <arg value="${build-dir}/logs/phploc.csv" />
+           <arg value="--log-xml" />
+           <arg value="${build-dir}/logs/phploc.xml" />
+           <arg path="${src-dir}" />
+        </exec>
+    </target>
+
+	<!-- phpunit -->
+	<target name="phpunit-ci" description="Run unit test with PHPUnit">
+        <exec executable="phpunit" failonerror="true">
+            <arg value="-c" />
+            <arg value="${basedir}/phpunit.xml.dist" />
+            <arg value="--coverage-html" />
+            <arg value="${build-dir}/coverage" />
+            <arg value="--coverage-clover" />
+            <arg value="${build-dir}/logs/clover.xml" />
+            <arg value="--coverage-crap4j" />
+            <arg value="${build-dir}/logs/crap4j.xml" />
+            <arg value="--log-junit" />
+            <arg value="${build-dir}/logs/junit.xml" />
+        </exec>
+	</target>
+
+</project>
