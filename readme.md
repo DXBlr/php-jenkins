@@ -1,6 +1,6 @@
 # php-jenkins
 
-Following installation/setup is w.r.t. Linux.
+Following installation/setup is w.r.t. Linux.<br/>
 Please, do commit the repository docs, build.xml, phpmd.xml, etc., if required.
 
 ## Installation
@@ -46,9 +46,9 @@ In case if it missed some, do it manually.
 * Click **Build Now**
 
 ## Clone/download php-jenkins
-* Clone/download php-jenkins build file(s) [here](https://github.com/DXBlr/php-jenkins).
+* Clone/download php-jenkins build file(s) [here](https://github.com/DXBlr/php-jenkins.git).
 * Copy files and directories to your repository.
-* Change the build.xml w.r.t. your project, if required.
+* Change the build.xml and other builds in build(directory) w.r.t. your project, if required.
  
 ## Reconfigure your project 
 * Select your project
