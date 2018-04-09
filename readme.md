@@ -46,7 +46,7 @@ In case if it missed some, do it manually.
 * Click **Build Now**
 
 ## Clone/download php-jenkins
-* Clone/download php-jenkins build file(s) [here]().
+* Clone/download php-jenkins build file(s) [here](https://github.com/DXBlr/php-jenkins).
 * Copy files and directories to your repository.
 * Change the build.xml w.r.t. your project, if required.
  
