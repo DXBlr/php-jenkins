@@ -1,6 +1,7 @@
 # php-jenkins
 
 Following installation/setup is w.r.t. Linux.
+Please, do commit the repository docs, build.xml, phpmd.xml, etc., if required.
 
 ## Installation
 Follow the steps [here](https://jenkins.io/doc/book/installing/#linux) to install jenkins.
@@ -17,6 +18,8 @@ Follow the steps [here](https://jenkins.io/doc/book/installing/#linux) to instal
 * Copy the hash and paste in the "Getting Started" dialog.
 
 > Install Jenkins Plugins:
+It installs the required plugins during first setup.
+In case if it missed some, do it manually.
 * Login to Jenkins Web App
 * Go to "Manage Jenkins" -> "Manage Plugins"
 * Select "Available" tab
@@ -47,9 +50,9 @@ Follow the steps [here](https://jenkins.io/doc/book/installing/#linux) to instal
 * Copy files and directories to your repository.
 * Change the build.xml w.r.t. your project, if required.
  
- ## Reconfigure your project 
- * Select your project
- * Click **Configure**
+## Reconfigure your project 
+* Select your project
+* Click **Configure**
 * Add post-build action(s), like phpmd, phpcs, etc
 * Click **Save**
 * Click **Build Now**
