@@ -90,6 +90,13 @@ Follow the steps [here](https://jenkins.io/doc/book/installing/#linux) to instal
     * xUnit
 * Click "Install without restart"
 
+or using jekkins cli
+
+        $ wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+        $ java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle cloverphp crap4j dry htmlpublisher jdepend plot pmd violations warnings xunit
+        $ java -jar jenkins-cli.jar -s http://localhost:8080 safe-restart
+
+
 ## Create your project  pipeline
 * Click **New item**
 * Add name for your project
