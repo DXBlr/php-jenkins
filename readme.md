@@ -108,3 +108,7 @@ or using jekkins cli
 * Copy files and directories to your repository.
 * Change the build.xml and other builds in build(directory) w.r.t. your project, if required.
 
+
+## Useful links
+* https://phpmd.org/rules/index.html
+* http://jenkins-php.org
